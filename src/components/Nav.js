@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMotorcycle, faShoppingCart, faLock } from "@fortawesome/free-solid-svg-icons";
 import Secondnav from "./Secondnav.js";
 import SearchBar from "./SearchBar.js";
+import ToggleMode from './toggleTheme.js';
 import { useAuth } from './AuthContext.js';
 import { Dropdown } from 'react-bootstrap';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -37,7 +38,9 @@ function Nav() {
           <SearchBar onSearch={handleSearch} />
         </div>
 
-        
+        <div className="col-lg-2 col-md-2 col-sm-12 text-center d-flex align-items-center justify-content-center">
+          <ToggleMode />
+        </div>
 
         {isLoggedIn ? (
  <div id='login' className="col-lg-2 col-md-2 col-sm-12 text-center d-flex align-items-end justify-content-center">
