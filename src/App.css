@@ -1,8 +1,44 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+  --background-color: white;
+  --text-color: black;
+  --header-background-color: #282c34;
+  --link-color: #61dafb;
+}
+
+/* Light Mode Styles */
+.light-mode {
+  --background-color: white;
+  --text-color: black;
+  --header-background-color: #282c34;
+  --link-color: #61dafb;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  --background-color: black;
+  --text-color: white;
+  --header-background-color: #1c1c1c;
+  --link-color: #9aafff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 .App {
   text-align: center;
   min-height: 100vh;
 }
-
 
 .App-logo {
   height: 40vmin;
@@ -16,18 +52,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--header-background-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text-color);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--link-color);
 }
 
 @keyframes App-logo-spin {
