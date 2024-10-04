@@ -39,16 +39,17 @@ const ProductView = () => {
   }
 
   const handleAddToCart = () => {
-    if(!authToken){
+    if (!authToken) {
       toast.error('Please Login first!');
-    }else{
-    addToCart({
-      productId: productId,
-      quantity: 1,
-      product: product,
-      authToken: authToken,
-    });
-    toast.success('Product added to cart!');}
+    } else {
+      addToCart({
+        productId: productId,
+        quantity: 1,
+        product: product,
+        authToken: authToken,
+      });
+      toast.success('Product added to cart!');
+    }
   };
 
   const handleCompare = () => {
@@ -83,19 +84,19 @@ const ProductView = () => {
             <div style={{ flex: 1 }}>
               <h1 style={{ color: "#000000" }}>{product.name}</h1>
               <h4>Brand: {product.brand}</h4>
-              Category: {product.category}
+              <h6>Category: {product.category}</h6>
               <p>Color: {product.color}</p>
               <div className="rating-container" >
-                <div>Rating:  <RatingStars rating={Number(product.rating)} /></div>
+                <div><h6>Rating:</h6>  <RatingStars rating={Number(product.rating)} /></div>
               </div>
               <div>
 
                 <h3>Price: $ {product.price}</h3>
 
                 <p className="discount" >10% Off!</p>
-                <s style={{ color: 'grey' }}>MRP: $ {product.price + product.price / 10} </s> Inclusive of all taxes.
+                <s style={{ color: 'grey' }}>MRP: $ {product.price + product.price / 10} </s>
               </div>
-              <div style={{ marginTop: '10px' }}>
+              <div style={{ marginTop: '10px' }} className='bike-desc'>
                 <hr style={{ borderColor: 'grey', margin: '5px 0' }} />
                 Bike Description: {product.description}
               </div>
@@ -113,40 +114,40 @@ const ProductView = () => {
           </div>
         </div>
         <div className="specs" style={{ color: "#000000", marginTop: '40px', marginBottom: '40px' }}>
-  {product.brake !== 'NA' && (
-    <>
-      <h3 style={{ color: 'black' }}>Specifications</h3>
-      <table>
-        <tbody>
-          <tr>
-            <td>Brake:</td>
-            <td>{product.brake}</td>
-          </tr>
-          <tr>
-            <td>Fuel Capacity:</td>
-            <td>{product.fuelcapacity}</td>
-          </tr>
-          <tr>
-            <td>Mileage:</td>
-            <td>{product.mileage}</td>
-          </tr>
-          <tr>
-            <td>Engine Type:</td>
-            <td>{product.enginetype}</td>
-          </tr>
-          <tr>
-            <td>Displacement:</td>
-            <td>{product.displacement}</td>
-          </tr>
-          <tr>
-            <td>Seater:</td>
-            <td>{product.seater}</td>
-          </tr>
-        </tbody>
-      </table>
-    </>
-  )}
-</div>
+          {product.brake !== 'NA' && (
+            <>
+              <h3 style={{ color: 'black' }}>Specifications</h3>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Brake:</td>
+                    <td>{product.brake}</td>
+                  </tr>
+                  <tr>
+                    <td>Fuel Capacity:</td>
+                    <td>{product.fuelcapacity}</td>
+                  </tr>
+                  <tr>
+                    <td>Mileage:</td>
+                    <td>{product.mileage}</td>
+                  </tr>
+                  <tr>
+                    <td>Engine Type:</td>
+                    <td>{product.enginetype}</td>
+                  </tr>
+                  <tr>
+                    <td>Displacement:</td>
+                    <td>{product.displacement}</td>
+                  </tr>
+                  <tr>
+                    <td>Seater:</td>
+                    <td>{product.seater}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          )}
+        </div>
 
 
       </div>
