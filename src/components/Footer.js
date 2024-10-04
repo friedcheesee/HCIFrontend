@@ -11,8 +11,7 @@ const Footer = () => {
                 <div className="row">
                     <div className="col-md-4">
                         <h5>About Us</h5>
-                        <p>We are Team 450, <br />
-                            the designers and developers of <br />
+                        <p>We are the designers and developers of <br />
                             Bikeswale - The ultimate bikes destination!</p>
                     </div>
                     <div className="col-md-4">
