@@ -8,6 +8,7 @@ import { useCart } from './CartContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext.js';
+import Bike3DViewer from './three_d'; // Import the 3D Viewer component
 
 const ProductView = () => {
   const [product, setProduct] = useState(null);
@@ -19,9 +20,7 @@ const ProductView = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`https://bikeswalebackend.onrender.com/products/${productId}`);
-        // setProduct(response.data.product);
         setProduct(response.data);
-        console.log('ProductView.js: ', product);
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -29,10 +28,6 @@ const ProductView = () => {
 
     fetchProduct();
   }, [productId]);
-
-  // NEW
-  console.log('Product:', product);
-  // NEW
 
   if (!product) {
     return <div>Product Undefined</div>;
@@ -54,18 +49,14 @@ const ProductView = () => {
 
   const handleCompare = () => {
     const comparedProducts = JSON.parse(localStorage.getItem('comparedProducts')) || [];
-
     if (comparedProducts.some(comparedProduct => comparedProduct._id === product._id)) {
       toast.error('Product is already added for comparison.');
       return;
     }
     toast.success(`${product.name} added for comparison!`);
-
     if (comparedProducts.length < 3) {
       const updatedComparedProducts = [...comparedProducts, product];
       localStorage.setItem('comparedProducts', JSON.stringify(updatedComparedProducts));
-
-
     } else {
       toast.error('Maximum of 3 products allowed for comparison.');
     }
@@ -75,85 +66,75 @@ const ProductView = () => {
     <div>
       <Nav />
       <div className="product-view-container">
-
         <div className="product-top-section">
           <div className="product-image">
-            <img src={product?.imageUrl} alt={product?.name} />
+            {product?.modelUrl ? (
+              <Bike3DViewer modelPath={product.modelUrl} />
+            ) : (
+              <img src={product?.imageUrl} alt={product?.name} />
+            )}
           </div>
           <div style={{ color: "#000000", paddingRight: '10px' }} className="product-details">
-            <div style={{ flex: 1 }}>
-              <h1 style={{ color: "#000000" }}>{product.name}</h1>
-              <h4>Brand: {product.brand}</h4>
-              <h6>Category: {product.category}</h6>
-              <p>Color: {product.color}</p>
-              <div className="rating-container" >
-                <div><h6>Rating:</h6>  <RatingStars rating={Number(product.rating)} /></div>
-              </div>
-              <div>
-
-                <h3>Price: $ {product.price}</h3>
-
-                <p className="discount" >10% Off!</p>
-                <s style={{ color: 'grey' }}>MRP: $ {product.price + product.price / 10} </s>
-              </div>
-              <div style={{ marginTop: '10px' }} className='bike-desc'>
-                <hr style={{ borderColor: 'grey', margin: '5px 0' }} />
-                Bike Description: {product.description}
-              </div>
+            <h1>{product.name}</h1>
+            <h4>Brand: {product.brand}</h4>
+            <h6>Category: {product.category}</h6>
+            <p>Color: {product.color}</p>
+            <div className="rating-container">
+              <h6>Rating:</h6> <RatingStars rating={Number(product.rating)} />
             </div>
-
+            <h3>Price: $ {product.price}</h3>
+            <p className="discount">10% Off!</p>
+            <s style={{ color: 'grey' }}>MRP: $ {product.price + product.price / 10}</s>
+            <div style={{ marginTop: '10px' }} className="bike-desc">
+              <hr style={{ borderColor: 'grey', margin: '5px 0' }} />
+              Bike Description: {product.description}
+            </div>
             <div className="action-buttons">
-
               <button className="add-to-cart-btn" onClick={handleAddToCart}>
                 Add to Cart
               </button>
-
-              <button className="compare-btn" onClick={handleCompare}>Compare</button>
+              <button className="compare-btn" onClick={handleCompare}>
+                Compare
+              </button>
             </div>
-
           </div>
         </div>
-        <div className="specs" style={{ color: "#000000", marginTop: '40px', marginBottom: '40px' }}>
-          {product.brake !== 'NA' && (
-            <>
-              <h3 style={{ color: 'black' }}>Specifications</h3>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Brake:</td>
-                    <td>{product.brake}</td>
-                  </tr>
-                  <tr>
-                    <td>Fuel Capacity:</td>
-                    <td>{product.fuelcapacity}</td>
-                  </tr>
-                  <tr>
-                    <td>Mileage:</td>
-                    <td>{product.mileage}</td>
-                  </tr>
-                  <tr>
-                    <td>Engine Type:</td>
-                    <td>{product.enginetype}</td>
-                  </tr>
-                  <tr>
-                    <td>Displacement:</td>
-                    <td>{product.displacement}</td>
-                  </tr>
-                  <tr>
-                    <td>Seater:</td>
-                    <td>{product.seater}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </>
-          )}
-        </div>
-
-
+        {product.brake !== 'NA' && (
+          <div className="specs" style={{ color: "#000000", marginTop: '40px', marginBottom: '40px' }}>
+            <h3 style={{ color: 'black' }}>Specifications</h3>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Brake:</td>
+                  <td>{product.brake}</td>
+                </tr>
+                <tr>
+                  <td>Fuel Capacity:</td>
+                  <td>{product.fuelcapacity}</td>
+                </tr>
+                <tr>
+                  <td>Mileage:</td>
+                  <td>{product.mileage}</td>
+                </tr>
+                <tr>
+                  <td>Engine Type:</td>
+                  <td>{product.enginetype}</td>
+                </tr>
+                <tr>
+                  <td>Displacement:</td>
+                  <td>{product.displacement}</td>
+                </tr>
+                <tr>
+                  <td>Seater:</td>
+                  <td>{product.seater}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
+      <ToastContainer />
     </div>
-
-
   );
 };
 
